@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seongmin.travel.model.dao.FollowDao">
+    <resultMap type="String" id="followMap">
+
+    </resultMap>
+
+    <select id="getFollowById" parameterType="String" resultMap="followMap">
+        SELECT follower_id
+        FROM follow
+        WHERE following_id = #{following_id}
+    </select>
+
+    <insert id="follow">
+        INSERT INTO `follow` (following_id, follower_id)
+        VALUES (#{following_id}, #{follower_id})
+    </insert>
+
+    <delete id="unfollow">
+        DELETE FROM `follow`
+        WHERE following_id = #{following_id} AND follower_id = #{follower_id}
+    </delete>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seongmin.travel.model.dao.VideoDao">
+
+	<resultMap type="User" id="userMap">
+	</resultMap>
+
+	<resultMap type="Video" id="videoMap">
+		<result column="index" property="videoIndex" />
+		<result column="title" property="title"/>
+		<result column="category" property="category"/>
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt" />
+		<result column="url" property="url"/>
+		<result column="like" property="like"/>
+		<result column="dislike" property="dislike"/>
+		<association column="writer_id" property="user" javaType="User">
+			<id column="writer_id" property="id"/>
+			<result column="password" property="password"/>
+			<result column="nickname" property="nickname"/>
+			<result column="email" property="email"/>
+			<result column="name" property="name"/>
+		</association>
+	</resultMap>
+
+	<select id="selectAll" resultType="Video" resultMap="videoMap">
+		SELECT v.`index`, v.title, v.category, v.writer_id,
+		       u.name, u.nickname, u.password, u.email,
+		       date_format(v.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date,
+		       v.view_cnt, v.url, v.`like`, v.dislike
+		FROM `user` as u, video AS v
+		WHERE v.writer_id = u.id
+	</select>
+
+	<select id="selectByIndex" resultMap="videoMap">
+		SELECT v.`index`, v.title, v.category, v.writer_id,
+			   u.name, u.nickname, u.password, u.email,
+			   date_format(v.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date,
+			   v.view_cnt, v.url, v.`like`, v.dislike
+		FROM `user` as u, video AS v
+		WHERE
+		`index` = #{videoIndex} AND v.writer_id = u.id
+	</select>
+
+	<select id="selectByViewCnt" resultType="Video" resultMap="videoMap">
+		SELECT v.`index`, v.title, v.category, v.writer_id,
+			   u.name, u.nickname, u.password, u.email,
+			   date_format(v.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date,
+			   v.view_cnt, v.url, v.`like`, v.dislike
+		FROM `user` as u, video AS v
+		WHERE v.writer_id = u.id
+		ORDER BY view_cnt DESC
+		limit 0, 3
+	</select>
+	
+	<select id="getVideosByPart" resultType="Video" resultMap="videoMap">
+		SELECT v.`index`, v.title, v.category, v.writer_id,
+			   u.name, u.nickname, u.password, u.email,
+			   date_format(v.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date,
+			   v.view_cnt, v.url, v.`like`, v.dislike
+		FROM `user` as u, video AS v
+		WHERE `category` = #{part} AND v.writer_id = u.id
+	</select>
+
+	<select id="searchVideo" resultType="Video" resultMap="videoMap">
+		SELECT v.`index`, v.title, v.category, v.writer_id,
+			   u.name, u.nickname, u.password, u.email,
+			   date_format(v.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date,
+			   v.view_cnt, v.url, v.`like`, v.dislike
+		FROM `user` as u, video AS v
+		WHERE title LIKE concat('%', #{query}, '%') AND v.writer_id = u.id
+	</select>
+
+	<insert id="insertVideo" parameterType="Video">
+		INSERT INTO video (title,
+		category, writer_id, url, reg_date)
+		VALUES (#{title}, #{category},
+		#{writerId}, #{url}, #{regDate})
+	</insert>
+
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE video
+		SET
+		view_cnt = view_cnt + 1
+		WHERE `index` = #{index}
+	</update>
+
+	<update id="updateVideo" parameterType="Video">
+		UPDATE video
+		SET
+		title=#{title}, category=#{category}, url=#{url}
+		WHERE
+		`index`=#{videoIndex}
+	</update>
+
+	<delete id="deleteVideoByIndex" parameterType="int">
+		DELETE FROM video
+		WHERE `index`=#{index}
+	</delete>
+
+	<update id="likeVideo" parameterType="int">
+		UPDATE video
+		SET
+		`like` = `like` + 1
+		WHERE `index` = #{index}
+	</update>
+
+	<update id="dislikeVideo" parameterType="int">
+		UPDATE video
+		SET
+		dislike = dislike + 1
+		WHERE `index` = #{index}
+	</update>
+
+</mapper>
