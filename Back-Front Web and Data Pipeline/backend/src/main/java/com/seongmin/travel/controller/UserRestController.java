@@ -1,7 +1,7 @@
 package com.seongmin.travel.controller;
 
 import com.seongmin.travel.model.dto.User;
-import com.seongmin.travel.service.UserService;
+import com.seongmin.travel.model.service.UserService;
 import com.seongmin.travel.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +77,6 @@ public class UserRestController {
 			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.UNAUTHORIZED);
 		}
 		session.setAttribute("loginUser", loginUser.getId());
-		res.put("loginUser", loginUser.getId());
 		/*
 		kafkaTemplate.send("login.kafka", loginUser.getId() + " logined at " + new Date().toString()).addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
 			@Override
@@ -97,7 +96,8 @@ public class UserRestController {
 			res.put("message", "failed to login");
 			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.UNAUTHORIZED);
 		}
-		res.put("message", "login success");
+		res.put("loginUser", loginUser);
+		logger.info("{} loged in", loginUser);
 		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.OK);
 	}
 	
@@ -107,8 +107,4 @@ public class UserRestController {
 		return new ResponseEntity<String>("로그아웃", HttpStatus.OK);
 	}
 
-	@GetMapping("/nickname/{nickname}")
-	public ResponseEntity<String> getId(@PathVariable String nickname){
-		return new ResponseEntity<String>(userService.getId(nickname), HttpStatus.OK);
-	}
 }

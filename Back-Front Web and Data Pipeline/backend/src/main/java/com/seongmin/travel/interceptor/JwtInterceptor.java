@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor implements HandlerInterceptor {
     private static final String HEADER_AUTH = "access-token";
 
-    @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private JwtInterceptor(JwtUtil jwtUtil){
+        this.jwtUtil = jwtUtil;
+    }
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -30,8 +35,6 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         throw new Exception("유효하지 않은 접근입니다.");
-
-
 
     }
 }

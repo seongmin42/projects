@@ -24,7 +24,7 @@ export default new Vuex.Store({
     reviews: [],
     review: {},
     followings: [],
-    loginUser: null,
+    loginUser: {},
   },
   getters: {
   },
@@ -35,21 +35,18 @@ export default new Vuex.Store({
     GET_VIDEO(state, payload) {
       state.video = payload
     },
-
     GET_REVIEW(state, payload) {
       state.review = payload
     },
     GET_REVIEWS_BY_VIDEO_INDEX(state, payload) {
       state.reviews = payload
     },
-
-    USER_LOGIN(state, payload) {
+    LOGIN_USER(state, payload) {
       state.loginUser = payload
     },
     USER_LOGOUT(state) {
       state.loginUser = null;
     },
-    
     SEARCH_YOUTUBE(state, videos) {
       state.videos = videos
     },
@@ -196,7 +193,6 @@ export default new Vuex.Store({
       })
     },
     // Review
-    // 좀더 깔끔하게
     getReview({ commit }, reviewIndex) {
       const API_URL = `${REVIEW_API}/detail/${reviewIndex}`
       console.log(API_URL)
@@ -222,12 +218,12 @@ export default new Vuex.Store({
     },
     createReview({ commit }, review) {
       const API_URL = `${REVIEW_API}/review`
-      console.log(review)
       commit
+      console.log(review)
       axios({
         url: API_URL,
         method: 'POST',
-        params: review,
+        data: review,
         headers: {
           "access-token": sessionStorage.getItem("access-token")
         },
@@ -320,13 +316,12 @@ export default new Vuex.Store({
         method: 'POST',
         params: user,
       }).then((res) => {
-        commit('USER_LOGIN', user.id)
+        commit('LOGIN_USER', res.data.loginUser)
         sessionStorage.setItem("access-token", res.data["access-token"]);
         sessionStorage.setItem("loginUser", res.data["loginUser"]);
         window.history.back();
       }).catch((err) => {
         console.log(err)
-        // window.history.go();
         window.alert("로그인에 실패하였습니다.")
       })
     },
@@ -365,7 +360,7 @@ export default new Vuex.Store({
       })
     },
     getFollowings({ commit }, user) {
-      const API_URL = `${FOllOW_API}/list/${user}`
+      const API_URL = `${FOllOW_API}/list/${user.id}`
       axios({
         url: API_URL,
         method: 'GET',

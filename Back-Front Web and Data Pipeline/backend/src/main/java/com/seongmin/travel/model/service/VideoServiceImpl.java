@@ -1,12 +1,11 @@
-package com.seongmin.travel.service;
+package com.seongmin.travel.model.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.seongmin.travel.model.dao.VideoDao;
 import com.seongmin.travel.model.dto.Video;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -20,7 +19,6 @@ public class VideoServiceImpl implements VideoService {
 	
 	@Override
 	public List<Video> getAllVideos() {
-		System.out.println(videoDao.selectAll());
 		return videoDao.selectAll();
 	}
 	

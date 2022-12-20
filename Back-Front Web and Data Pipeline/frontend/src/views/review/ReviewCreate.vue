@@ -1,16 +1,30 @@
 <template>
   <div>
-    <h3>리뷰 등록</h3>
-    <fieldset>
-      <legend>리뷰 등록</legend>
-      <input type="hidden" id="videoIndex" v-model="videoIndex" /><br />
-      <label for="title">제목 : </label>
-      <input type="text" id="title" v-model="title" /><br />
-      <label for="content">내용 : </label>
-      <textarea id="content" cols="100" rows="5" v-model="content"></textarea>
-      <br />
-      <button @click="createReview">등록</button>
-    </fieldset>
+    <h3 slot="header" class="mb-0">리뷰 등록</h3>
+    <br>
+    <b-form-group>
+      <b-input-group>
+        <b-form-input
+          placeholder="제목"
+          type="text"
+          id="title"
+          v-model="title"
+        ></b-form-input>
+      </b-input-group>
+    </b-form-group>
+
+    <b-input-group>
+      <b-form-textarea
+        placeholder="내용"
+        id="content"
+        v-model="content"
+      ></b-form-textarea>
+      <b-input-group-append>
+        <b-button variant="outline-primary" @click="createReview"
+          >등록</b-button
+        >
+      </b-input-group-append>
+    </b-input-group>
   </div>
 </template>
 
@@ -23,7 +37,6 @@ export default {
       videoIndex: "",
       title: "",
       content: "",
-      writerId: this.$store.state.loginUser.id,
     };
   },
   computed: {
@@ -35,8 +48,10 @@ export default {
         videoIndex: this.videoIndex,
         title: this.title,
         content: this.content,
-        writerId: this.loginUser,
+        user: this.$store.state.loginUser,
       };
+      console.log(39);
+      console.log(review);
       this.$store.dispatch("createReview", review);
     },
   },

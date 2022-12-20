@@ -1,7 +1,7 @@
 package com.seongmin.travel.controller;
 
 import com.seongmin.travel.model.dto.Video;
-import com.seongmin.travel.service.VideoService;
+import com.seongmin.travel.model.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

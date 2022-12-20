@@ -1,4 +1,4 @@
-package com.seongmin.travel.service;
+package com.seongmin.travel.model.service;
 
 import com.seongmin.travel.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;

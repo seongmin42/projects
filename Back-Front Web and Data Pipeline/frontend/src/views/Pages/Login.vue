@@ -44,7 +44,6 @@
                   <base-input
                     alternative
                     class="mb-3"
-                    name="Id"
                     :rules="{ required: true }"
                     prepend-icon="ni ni-single-02"
                     placeholder="아이디"
@@ -55,7 +54,6 @@
                   <base-input
                     alternative
                     class="mb-3"
-                    name="Password"
                     :rules="{ required: true }"
                     prepend-icon="ni ni-lock-circle-open"
                     type="password"

@@ -46,6 +46,8 @@ public class User {
 		this.email = email;
 		this.nickname = nickname;
 	}
+
+	public User(){}
 	
 	@Override
 	public String toString() {

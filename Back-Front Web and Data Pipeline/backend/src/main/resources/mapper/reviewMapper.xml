@@ -39,14 +39,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectByVideoIndex" parameterType="int" resultType="Review" resultMap="reviewMap">
-		SELECT r.`index`, r.video_index, r.title, r.content, u.nickname AS 'writer_id', date_format(r.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date, r.view_cnt, r.`like`, r.dislike
+		SELECT r.`index`, r.video_index, r.title, r.content, date_format(r.reg_date, '%Y-%m-%d %H:%i:%s') as reg_date, r.view_cnt, r.`like`, r.dislike,
+			   u.`id`, u.nickname, u.password, u.email, u.name
 		FROM review AS r, user AS u
-		WHERE `video_index` = #{videoIndex} AND r.writer_id = u.id
+		WHERE `video_index` = #{videoIndex} AND r.writer_id = u.`id`
 	</select>
 	
 	<insert id="insertReview" parameterType="Review">
 		INSERT INTO review (video_index, title, content, writer_id, reg_date)
-		VALUES (${videoIndex}, #{title}, #{content}, #{writerId}, #{regDate})
+		VALUES (${videoIndex}, #{title}, #{content}, (SELECT `id` FROM `user` WHERE `id`=#{user.id}), #{regDate})
 	</insert>
 
 	<update id="updateReview" parameterType="Review">

@@ -2,15 +2,14 @@ package com.seongmin.travel.controller;
 
 import java.util.List;
 
+import com.seongmin.travel.model.dto.Follow;
 import com.seongmin.travel.model.dto.User;
-import com.seongmin.travel.service.UserService;
+import com.seongmin.travel.model.service.FollowService;
+import com.seongmin.travel.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.seongmin.travel.model.dto.Follow;
-import com.seongmin.travel.service.FollowService;
 
 @RestController
 @RequestMapping("/follow-api")

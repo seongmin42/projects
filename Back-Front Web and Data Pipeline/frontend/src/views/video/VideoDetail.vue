@@ -97,8 +97,7 @@
         class="mt-2 mb-2 mr-xl-0 ml-xl-4"
         style="width: 80%"
       >
-        <!-- 언팔로우상태면 팔로우하기 팔로우상태면 언팔로우하기 -->
-        <div v-if="video.user.id != loginUser" class="mb-2">
+        <div v-if="video.user.id != loginUser.id" class="mb-2">
           <card header-classes="bg-transparent">
             <div>
               <!-- 언팔로우상태면 팔로우하기 팔로우상태면 언팔로우하기 -->
@@ -109,7 +108,7 @@
                 class="follow-button ml-5"
                 @click="
                   follow({
-                    following: `${loginUser}`,
+                    following: `${loginUser.id}`,
                     follower: `${video.user.id}`,
                   })
                 "
@@ -213,7 +212,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState(["video", "reviews", "loginUser", "followings"]),
+    ...mapState(["video", "reviews", "loginUser", "followings", "review"]),
     getUser() {
       if (this.loginUser) {
         return this.loginUser;
@@ -243,8 +242,9 @@ export default {
         videoIndex: videoIndex,
         title: this.title,
         content: this.content,
-        writerId: this.loginUser,
+        user: this.loginUser,
       };
+      console.log(review)
       this.$store.dispatch("createReview", review);
       this.title = "";
       this.content = "";

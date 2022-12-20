@@ -69,26 +69,21 @@ public class Review {
 	public void setDislike(int dislike) {
 		this.dislike = dislike;
 	}
-	
-	// 등록 생성자
-	public Review(int videoIndex, String title, String content, User user) {
+
+	public Review() {}
+
+	public Review(int reviewIndex, int videoIndex, String title, String content, Date regDate, int viewCnt, int like, int dislike, User user) {
+		this.reviewIndex = reviewIndex;
 		this.videoIndex = videoIndex;
 		this.title = title;
 		this.content = content;
+		this.regDate = regDate;
+		this.viewCnt = viewCnt;
+		this.like = like;
+		this.dislike = dislike;
 		this.user = user;
-		this.regDate = new Date();
 	}
-	
-	// 수정 생성자
-	public Review(int reviewIndex, String title, String content) {
-		this.reviewIndex = reviewIndex;
-		this.title = title;
-		this.content = content;
-	}
-	
-	public Review() {
-	}
-	
+
 	@Override
 	public String toString() {
 		return "Review [reviewIndex=" + reviewIndex + ", videoIndex=" + videoIndex + ", title=" + title + ", content="

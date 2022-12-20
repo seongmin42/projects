@@ -1,4 +1,4 @@
-package com.seongmin.travel.service;
+package com.seongmin.travel.model.service;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.seongmin.travel.service;
+package com.seongmin.travel.model.service;
 
 import java.util.List;
 
@@ -17,6 +17,5 @@ public interface UserService {
 	public void removeUser(String id);
 
 	public User login(String id, String password);
-	
-	public String getId(String nickname);
+
 }

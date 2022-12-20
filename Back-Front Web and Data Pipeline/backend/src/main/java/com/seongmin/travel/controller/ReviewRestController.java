@@ -1,7 +1,7 @@
 package com.seongmin.travel.controller;
 
 import com.seongmin.travel.model.dto.Review;
-import com.seongmin.travel.service.ReviewService;
+import com.seongmin.travel.model.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +43,9 @@ public class ReviewRestController {
 	
 	
 	@PostMapping("/review")
-	public ResponseEntity<String> registReview(Review review){
+	public ResponseEntity<String> registReview(@RequestBody Review review){
 		review.setRegDate(new Date());
+		System.out.println(review);
 		reviewService.registReview(review);
 		return new ResponseEntity<String>("registed " + review.getTitle(), HttpStatus.CREATED);
 	}

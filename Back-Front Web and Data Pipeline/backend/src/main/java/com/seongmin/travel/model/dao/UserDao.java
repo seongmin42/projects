@@ -1,7 +1,6 @@
 package com.seongmin.travel.model.dao;
 
 import java.util.List;
-
 import com.seongmin.travel.model.dto.User;
 
 public interface UserDao {
